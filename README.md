@@ -1,9 +1,9 @@
-==Shell Playlist Crawler==
-===USAGE===
+#Shell Playlist Crawler
+##USAGE
 Enter the URL of the YouTube playlists you want to search into. The format of the URL is "youtube.com/playlist?list=...".
 Pass the name of the song (between double quotes if it has multiple words) with the '-k' keyword flag.
 
-===OVERVIEW===
+##OVERVIEW
 This script is composed of 3 files:
 
 * A 'playlist-html-parser.awk' awk script which processes the HTML document sent in every HTTP response, looking for matches to the keyword you entered and returning the name of the playlist where the match was found, alongside the name of the video and its URL.  
