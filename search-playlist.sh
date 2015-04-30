@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh 
 
 ## DESCRIPTION
 #  This script accepts a keyword specified by the user which is used to search for videos or artists across a list of playlists contained in
@@ -16,17 +16,17 @@ readonly URL_LIST_PATH="playlists.txt"
 # Process the arguments passed from the command line.
 while getopts ":k:" OPTION;
 do
-    case "$OPTION" in
-	k) KEYWORD="$OPTARG";;
-	\?) echo "$ERR_MSG";
+    case ${OPTION} in
+	k) KEYWORD=${OPTARG};;
+	\?) echo ${ERR_MSG};
 	    exit 1
 	    ;;
     esac
 done
 
 # Check if the 'playlists.txt' file exists to load the list of playlist URLs to sift through. 
-if [ -f "$URL_LIST_PATH" ]; then
-    if [ ! -s "$URL_LIST_PATH" ]; then
+if [ -f ${URL_LIST_PATH} ]; then
+    if [ ! -s ${URL_LIST_PATH} ]; then
 	echo "The playlist URLs file is empty. $ADD_URLS_MSG"
 	exit 1
     fi
@@ -40,10 +40,10 @@ LIST_LINE_NUM="`wc -l $URL_LIST_PATH | awk '{ printf(\"%d\", $0) }'`"
 i=1
 AWK_OUTPUT=
 
-while [ "$i" -le "$LIST_LINE_NUM" ]
+while [ "$i" -le ${LIST_LINE_NUM} ]
 do
     PLAYLIST_URL=`sed -n "$i p" $URL_LIST_PATH` # Get the URL of the playlist from the list file
-    AWK_OUTPUT+=$(curl $PLAYLIST_URL | awk --assign "$AWK_KWD_VARNAME"="$KEYWORD" -f "$AWK_SCRIPT_PATH") 
+    AWK_OUTPUT+=$(curl $PLAYLIST_URL | awk --assign ${AWK_KWD_VARNAME}=${KEYWORD} -f ${AWK_SCRIPT_PATH}) 
     ((i+=1))
 done 
-echo "$AWK_OUTPUT"
+echo ${AWK_OUTPUT}
