@@ -1,11 +1,25 @@
-#!/usr/bin/env sh 
-
-## DESCRIPTION
-#  This script accepts a keyword specified by the user which is used to search for videos or artists across a list of playlists contained in
-#  the 'playlists.txt' file. Then the script returns the name and URL of every found video, alongside the name of the playlist they were found in.
+#!/usr/bin/env bash 
+# 
+# search-playlist.sh
+#
+# This script accepts a keyword specified by the user which is used to search for videos or artists across a list of playlists contained in
+# the 'playlists.txt' file. Then the script returns the name and URL of every found video, alongside the name of the playlist they were found in.
 ## OPTIONS
 # -k : keyword to match. If the keyword is not supplied when the script is invoked,
 # the script will prompt the user for it.
+#
+readonly HELP_MSG="
+Youtube Playlist Crawler
+\n\n
+Usage:\n
+\tplaylist-crawler.sh -k <keyword>
+\n\nThis script accepts a keyword specified by the user which is used to search for videos or artists across a list of playlists contained in
+the 'playlists.txt' file. Then the script returns the name and URL of every found video, alongside the name of the playlist they were found in.
+\n\nCommands:
+\n
+\n-k \tkeyword to match. If the keyword is not supplied when the script is invoked,
+the script will prompt the user for it.
+\n-h \tdisplay this help message."
 
 readonly ERR_MSG="The supplied option(s) were not recognised."
 readonly ADD_URLS_MSG="Add some playlist URLs to the file and run the script again."
@@ -14,10 +28,12 @@ readonly AWK_SCRIPT_PATH="playlist-html-parser.awk"
 readonly URL_LIST_PATH="playlists.txt"
 
 # Process the arguments passed from the command line.
-while getopts ":k:" OPTION;
+while getopts ":k:h" OPTION;
 do
     case ${OPTION} in
 	k) KEYWORD=${OPTARG};;
+	h) echo -e ${HELP_MSG};
+	    exit 0;;
 	\?) echo ${ERR_MSG};
 	    exit 1
 	    ;;
